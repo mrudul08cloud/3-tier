@@ -1,6 +1,5 @@
-version: "3.9"
-
 services:
+
   # ── Tier 3: Database ──────────────────────────────
   postgres:
     image: postgres:15-alpine
@@ -38,7 +37,7 @@ services:
     volumes:
       - ./backend:/app
 
-  # ── Tier 1: Frontend ──────────────────────────────
+  # ── Tier 1: Frontend (nginx serves React + proxies /api to Flask) ──
   frontend:
     build: ./frontend
     container_name: todo_frontend
