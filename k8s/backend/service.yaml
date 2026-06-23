@@ -1,13 +1,16 @@
 apiVersion: v1
 kind: Service
-metadata:
-name: backend
-namespace: todo-app
-spec:
-selector:
-app: backend
-ports:
 
-* port: 5000
-  targetPort: 5000
+metadata:
+  name: backend
+  namespace: todo-app
+
+spec:
+  selector:
+    app: backend
+
+  ports:
+  - port: 5000
+    targetPort: 5000
+
   type: ClusterIP
