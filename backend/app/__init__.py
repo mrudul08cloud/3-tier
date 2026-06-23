@@ -10,26 +10,34 @@ load_dotenv()
 db = SQLAlchemy()
 migrate = Migrate()
 
-
 def create_app():
-    app = Flask(__name__)
+app = Flask(**name**)
 
-    env = os.environ.get("FLASK_ENV", "development")
-    from .config import config_map
-    app.config.from_object(config_map.get(env, "development"))
+```
+env = os.environ.get("FLASK_ENV", "development")
+from .config import config_map
+app.config.from_object(config_map.get(env, "development"))
 
-    # Extensions
-    db.init_app(app)
-    migrate.init_app(app, db)
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+# Extensions
+db.init_app(app)
+migrate.init_app(app, db)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-    # Register blueprints
-    from .routes.todos import todos_bp
-    app.register_blueprint(todos_bp, url_prefix="/api")
+# Import models
+from .models import Todo
 
-    # Health check
-    @app.route("/api/health")
-    def health():
-        return {"status": "ok", "message": "Flask backend is running"}, 200
+# Create tables automatically
+with app.app_context():
+    db.create_all()
 
-    return app
+# Register blueprints
+from .routes.todos import todos_bp
+app.register_blueprint(todos_bp, url_prefix="/api")
+
+# Health check
+@app.route("/api/health")
+def health():
+    return {"status": "ok", "message": "Flask backend is running"}, 200
+
+return app
+```
