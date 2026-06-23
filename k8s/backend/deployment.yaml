@@ -15,7 +15,7 @@ app: backend
 spec:
 containers:
 - name: backend
-image: YOUR_ECR_REPO/todo-backend:latest
+image: mrudul08cloud/3tier-backend:latest
 
 ```
     ports:
