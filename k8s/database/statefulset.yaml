@@ -1,48 +1,59 @@
 apiVersion: apps/v1
 kind: StatefulSet
+
 metadata:
-  name: postgres
-  namespace: todo-app
+name: postgres
+namespace: todo-app
+
 spec:
-  serviceName: postgres
-  replicas: 1
+serviceName: postgres
+replicas: 1
 
-  selector:
-    matchLabels:
-      app: postgres
+selector:
+matchLabels:
+app: postgres
 
-  template:
-    metadata:
-      labels:
-        app: postgres
-    spec:
-      containers:
-      - name: postgres
-        image: postgres:15-alpine
+template:
+metadata:
+labels:
+app: postgres
 
-        ports:
-        - containerPort: 5432
+```
+spec:
+  containers:
+  - name: postgres
+    image: postgres:15-alpine
 
-        env:
-        - name: POSTGRES_DB
-          value: "todo_db"
+    ports:
+    - containerPort: 5432
 
-        - name: POSTGRES_USER
-          value: "postgres"
+    env:
+    - name: POSTGRES_DB
+      value: "todo_db"
 
-        - name: POSTGRES_PASSWORD
-          value: "postgres"
+    - name: POSTGRES_USER
+      value: "postgres"
 
-        volumeMounts:
-        - name: postgres-storage
-          mountPath: /var/lib/postgresql/data
+    - name: POSTGRES_PASSWORD
+      value: "postgres"
 
-  volumeClaimTemplates:
-  - metadata:
-      name: postgres-storage
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
+    volumeMounts:
+    - name: postgres-storage
+      mountPath: /var/lib/postgresql/data
+```
+
+volumeClaimTemplates:
+
+* metadata:
+  name: postgres-storage
+
+  spec:
+  storageClassName: gp2
+
+  accessModes:
+
+  * ReadWriteOnce
+
+  resources:
+  requests:
+  storage: 5Gi
