@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: mrudul08cloud/3tier-frontend:latest
+        image: mrudul08cloud/3tier-frontend:11
         ports:
         - containerPort: 80
